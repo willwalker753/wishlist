@@ -6,6 +6,11 @@ export default class link extends Component {
         super(props)
         this.state = {
              'url': undefined,
+             'title': undefined,
+             'site': undefined,
+             'desc': undefined,
+             'img': undefined,
+             'error': undefined,
         }
     }
     onChange = e => {
@@ -17,14 +22,17 @@ export default class link extends Component {
         await axios.post('http://localhost:8000/', json)
             .then(response => {
                 if(response){
-                    
                     console.log(response)
+                    this.setState({
+                        'title': response.data.title,
+                        'site': response.data["al:android:app_name"],
+                        'desc': response.data.description,
+                        'img': response.data.image,
+                    })
                 }
             },
             (error) => {
-                this.setState({
-                    error
-                });
+                this.setState({'error': error});
             }
             )
     }
@@ -35,6 +43,14 @@ export default class link extends Component {
                     <input type='text' onChange={this.onChange}></input>
                     <button type='submit'>Submit</button>
                 </form>
+                <div >
+                    <img src={this.state.img} alt='site thumbnail'></img>
+                    <h5>{this.state.site}</h5>
+                    <h3>{this.state.title}</h3>
+                    <p>{this.state.desc}</p>
+                    
+                </div>
+                <p>{this.state.error}</p>
             </div>
         )
     }
