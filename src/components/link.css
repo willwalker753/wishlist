@@ -1,6 +1,29 @@
+#list-box {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
 .list-item {
     display: flex;
 }
+.list-item-link {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-decoration: none;
+    
+    margin-bottom: 20px;
+}
 .list-img {
     width: 200px;
+}
+.list-words > * {
+    color: black;
+    max-width: 80%;
+}
+.list-item-delete:hover {
+    cursor: pointer;
+}
+.hidden {
+    display: none;
 }

@@ -11,7 +11,7 @@ export default class link extends Component {
                 'title': '',
                 'site': '',
                 'desc': '',
-                'img': 'https://img.pngio.com/bokeh-png-images-transparent-free-download-pngmartcom-clear-png-background-900_900.png'
+                'img': ''
             }]
         }
     }
@@ -27,8 +27,9 @@ export default class link extends Component {
                     let res = response.data;
                     console.log(res)
                     let tempObj = {
+                        'url': res.url,
                         'title': res.title,
-                        'site': res["al:android:app_name"],
+                        'site': res.source,
                         'desc': res.description,
                         'img': res.image
                     }
@@ -41,24 +42,35 @@ export default class link extends Component {
                 this.setState({'error': error});
             }
             )
+        document.getElementById('url-input').value = null;
+        document.getElementById('list-box').classList.remove('hidden');
+    }
+    onDelete = e => {
+        console.log(e.target.id)
+        listArr.splice(e.target.id, 1);
+        this.setState({ 'listArr': listArr })
     }
     render() {
         return (
             <div>
                 <form onSubmit={this.onSubmit}>
-                    <input type='text' onChange={this.onChange}></input>
+                    <input type='text' id='url-input' onChange={this.onChange}></input>
                     <button type='submit'>Submit</button>
                 </form>
-                <div id='list-box'>
+                <div id='list-box' className='hidden'>
                     {this.state.listArr.map((item, index) => (
-                        <div className='list-item' key={index}>
-                            <img src={item.img} className='list-img' alt='site thumbnail'></img>
-                            <div className='list-words'>
-                                <h5>{item.site}</h5>
-                                <h3>{item.title}</h3>
-                                <p>{item.desc}</p>
-                            </div>     
+                        <div className='list-item'>
+                            <a className='list-item-link' href={item.url} target='_blank' key={item.title}>
+                                <img src={item.img} className='list-img' alt='site thumbnail'></img>
+                                <div className='list-words'>
+                                    <h5>{item.site}</h5>
+                                    <h3>{item.title}</h3>
+                                    <p>{item.desc}</p>
+                                </div>
+                            </a>
+                            <button className='list-item-delete' id={index} key={index} onClick={this.onDelete}>Trash</button>
                         </div>
+                        
                     ))}        
                 </div>
                 <p>{this.state.error}</p>
