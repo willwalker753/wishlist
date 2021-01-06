@@ -5,10 +5,10 @@ export default class nav extends Component {
         return (
             <div>
                 <h1>Wishlist</h1>
-                <div>
+                {/*<div>
                     <a href='/signup'>Sign Up</a>
                     <a href='/login'>Login</a>
-                </div>
+                </div>*/}
             </div>
         )
     }
